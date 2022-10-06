@@ -100,6 +100,9 @@ class GCPBucketStore extends Store {
           },
           function (e, apiResponse) {
             if (e) {
+              if (e.code == 404) {
+                return cb(null, "OK"); // No-op to delete file that doesn't exist
+              }
               return cb(e);
             } else {
               return cb(null, "OK");

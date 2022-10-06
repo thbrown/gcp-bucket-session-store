@@ -3,6 +3,10 @@ const GCPStore = require("../src/index.js");
 const util = require("util");
 
 const TEST_BUCKET_NAME = "test-session-bucket";
+let store = new GCPStore({
+  bucketName: TEST_BUCKET_NAME,
+  modifyCustomTime: true,
+});
 
 /**
  * These tests wont without authentication (e.g. from a gcp compute instance with a service account that has read/write access to storage).
@@ -21,7 +25,6 @@ describe("Test Session Store", function () {
   describe("Test set", function () {
     it("Setting a value should work", async function () {
       await new Promise((resolve, reject) => {
-        let store = new GCPStore({ bucketName: TEST_BUCKET_NAME });
         store.set("1234", { name: "Luke Skywalker" }, (e) => {
           if (e) {
             reject(e);
@@ -34,7 +37,6 @@ describe("Test Session Store", function () {
 
   describe("Test get", function () {
     it("Setting a value and getting it back should work", async function () {
-      let store = new GCPStore({ bucketName: TEST_BUCKET_NAME });
       const SESS = { name: "Luke Skywalker" };
       const SID = "12345";
 
@@ -67,7 +69,6 @@ describe("Test Session Store", function () {
 
   describe("Test Destroy", function () {
     it("Destroying a value we previously set should work", async function () {
-      let store = new GCPStore({ bucketName: TEST_BUCKET_NAME });
       const SESS = { name: "Luke Skywalker" };
       const SID = "123456";
 
@@ -105,6 +106,20 @@ describe("Test Session Store", function () {
 
       // Validate
       assert.equal(retVal, undefined);
+    });
+
+    it("Destroying a value that doesn't exist should work", async function () {
+      const SID = "1234567";
+
+      // Destroy the value
+      await new Promise((resolve, reject) => {
+        store.destroy(SID, (e) => {
+          if (e) {
+            reject(e);
+          }
+          resolve();
+        });
+      });
     });
   });
 });
