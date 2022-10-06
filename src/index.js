@@ -69,14 +69,16 @@ class GCPBucketStore extends Store {
               let content = JSON.parse(await file.download());
               return cb(null, content);
             } catch (e) {
-              console.log("A", e);
               cb(e);
             }
           };
           dl();
         })
         .catch((e) => {
-          console.log("B", e);
+          // Return undefined if the file was not found
+          if (e.code == 404) {
+            return cb(null, undefined);
+          }
           return cb(e);
         });
     } catch (e) {
@@ -116,6 +118,9 @@ class GCPBucketStore extends Store {
       const file = myBucket.file(sid);
       file.delete(function (e, apiResponse) {
         if (e) {
+          if (e.code == 404) {
+            return cb(null, "OK"); // No-op to delete file that doesn't exist
+          }
           return cb(e);
         } else {
           return cb(null, "OK");
