@@ -13,7 +13,7 @@ let store = new GCPStore({
  * Or if the gcp project does not have an existing bucket named TEST_BUCKET_NAME ("test-session-bucket")
  */
 describe("Test Session Store", function () {
-  describe("Test Constructor", function () {
+  describe("Test constructor", function () {
     it("bucketName is required", function () {
       let testFunction = function () {
         new GCPStore({});
@@ -67,7 +67,7 @@ describe("Test Session Store", function () {
     });
   });
 
-  describe("Test Destroy", function () {
+  describe("Test destroy", function () {
     it("Destroying a value we previously set should work", async function () {
       const SESS = { name: "Luke Skywalker" };
       const SID = "123456";
