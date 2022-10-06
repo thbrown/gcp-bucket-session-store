@@ -35,6 +35,7 @@ describe("Test Session Store", function () {
       const SID = "12345";
 
       // Store the value
+      console.log("STORING VALUE");
       await new Promise((resolve, reject) => {
         store.set(SID, SESS, (e) => {
           if (e) {
@@ -45,9 +46,10 @@ describe("Test Session Store", function () {
       });
 
       // Retrieve it
+      console.log("GETTING VALUE");
       let retVal = undefined;
       await new Promise((resolve, reject) => {
-        store.get(SID, SESS, (e, val) => {
+        store.get(SID, (e, val) => {
           if (e) {
             reject(e);
           }
@@ -90,7 +92,7 @@ describe("Test Session Store", function () {
       // Retrieve it
       let retVal = undefined;
       await new Promise((resolve, reject) => {
-        store.get(SID, SESS, (e, val) => {
+        store.get(SID, (e, val) => {
           if (e) {
             reject(e);
           }
