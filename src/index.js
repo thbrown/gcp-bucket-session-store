@@ -93,7 +93,7 @@ class GCPBucketStore extends Store {
           const file = data[0];
           let dl = async function () {
             try {
-              let content = await file.download();
+              let content = JSON.parse(await file.download());
               return cb(null, content);
             } catch (e) {
               cb(e);
