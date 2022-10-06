@@ -4,6 +4,10 @@ const util = require("util");
 
 const TEST_BUCKET_NAME = "test-session-bucket";
 
+/**
+ * These tests wont without authentication (e.g. from a gcp compute instance with a service account that has read/write access to storage).
+ * Or if the gcp project does not have an existing bucket named TEST_BUCKET_NAME ("test-session-bucket")
+ */
 describe("Test Session Store", function () {
   describe("Test Constructor", function () {
     it("bucketName is required", function () {
@@ -35,7 +39,6 @@ describe("Test Session Store", function () {
       const SID = "12345";
 
       // Store the value
-      console.log("STORING VALUE");
       await new Promise((resolve, reject) => {
         store.set(SID, SESS, (e) => {
           if (e) {
@@ -46,7 +49,6 @@ describe("Test Session Store", function () {
       });
 
       // Retrieve it
-      console.log("GETTING VALUE");
       let retVal = undefined;
       await new Promise((resolve, reject) => {
         store.get(SID, (e, val) => {
@@ -89,7 +91,7 @@ describe("Test Session Store", function () {
         });
       });
 
-      // Retrieve it
+      // Retrieve the value
       let retVal = undefined;
       await new Promise((resolve, reject) => {
         store.get(SID, (e, val) => {

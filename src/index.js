@@ -69,12 +69,14 @@ class GCPBucketStore extends Store {
               let content = JSON.parse(await file.download());
               return cb(null, content);
             } catch (e) {
+              console.log("A", e);
               cb(e);
             }
           };
           dl();
         })
         .catch((e) => {
+          console.log("B", e);
           return cb(e);
         });
     } catch (e) {
