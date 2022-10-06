@@ -91,7 +91,15 @@ class GCPBucketStore extends Store {
         .get()
         .then(function (data) {
           const file = data[0];
-          return cb(null, file);
+          let dl = async function () {
+            try {
+              let content = await file.download();
+              return cb(null, content);
+            } catch (e) {
+              cb(e);
+            }
+          };
+          dl();
         })
         .catch((e) => {
           return cb(e);

@@ -59,7 +59,7 @@ describe("Test Session Store", function () {
       });
 
       // Validate
-      assert.equal(JSON.stringify(SESS), JSON.stringify(retVal));
+      assert.equal(JSON.stringify(retVal), JSON.stringify(SESS));
     });
   });
 
