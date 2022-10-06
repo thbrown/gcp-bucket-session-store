@@ -156,7 +156,7 @@ class GCPBucketStore extends Store {
 
   destroy(sid, cb = noop) {
     try {
-      const myBucket = storage.bucket(this.bucketName);
+      const myBucket = this.storage.bucket(this.bucketName);
       const file = myBucket.file(sid);
       file.delete(function (e, apiResponse) {
         if (e) {
