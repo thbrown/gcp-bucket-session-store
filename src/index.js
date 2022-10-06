@@ -37,9 +37,10 @@ class GCPBucketStore extends Store {
         if (this.modifyCustomTime) {
           const date = new Date();
           const formatted = date.toISOString(); // RFC 3339
+          console.log("SETTING", formatted);
           file.setMetadata(
             {
-              "Custom-Time": formatted,
+              customTime: formatted,
             },
             function (e2, apiResponse) {
               if (e2) {
