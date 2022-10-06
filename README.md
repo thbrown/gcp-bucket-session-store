@@ -11,7 +11,7 @@
 
 ## Setup
 
-You'll want to make sure the files in your bucket aren't cached. This is a setting on the bucket.
+You'll want to make sure the files in your bucket aren't cached. I _think_ this is controlled my metadata setting on the file/bucket.
 
 You'll want to make sure your server has permission to access Storage. If you are running from a gcp compute instance, the appropriate "Access Scope" is read/write if the modifyCustomTime param is set to false (default) or full if modifyCustomTime is set to true.
 

@@ -24,7 +24,6 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "mocha": "^9.2.2",
-    "typescript": "^4.6.4",
     "prettier": "^2.0.5"
   }
   
