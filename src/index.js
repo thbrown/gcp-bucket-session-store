@@ -11,11 +11,9 @@ class GCPBucketStore extends Store {
       throw new Error("bucketName is a required option");
     }
     this.bucketName = options.bucketName;
-    this.modifyCustomTime = options.modifyCustomTime || false;
+    this.modifyCustomTime = options.modifyCustomTime || false; // DaysSinceCustomTime (https://cloud.google.com/storage/docs/lifecycle)
     this.storage = new Storage();
   }
-
-  // DaysSinceCustomTime (https://cloud.google.com/storage/docs/lifecycle)
 
   set(sid, sess, cb = noop) {
     // Write the session to the bucket
@@ -56,31 +54,6 @@ class GCPBucketStore extends Store {
         }
       }.bind(this)
     );
-
-    /*
-    let args = [this.prefix + sid];
-
-    let value;
-    try {
-      value = this.serializer.stringify(sess);
-    } catch (er) {
-      return cb(er);
-    }
-    args.push(value);
-
-    let ttl = 1;
-    if (!this.disableTTL) {
-      ttl = this._getTTL(sess);
-      args.push("EX", ttl);
-    }
-
-    if (ttl > 0) {
-      this.client.set(args, cb);
-    } else {
-      // If the resulting TTL is negative we can delete / destroy the key
-      this.destroy(sid, cb);
-    }
-    */
   }
 
   get(sid, cb = noop) {
@@ -107,23 +80,6 @@ class GCPBucketStore extends Store {
     } catch (e) {
       return cb(e);
     }
-
-    // Reference Impl
-    /*
-    let key = this.prefix + sid;
-    this.client.get(key, (err, data) => {
-      if (err) return cb(err);
-      if (!data) return cb();
-
-      let result;
-      try {
-        result = this.serializer.parse(data);
-      } catch (err) {
-        return cb(err);
-      }
-      return cb(null, result);
-    });
-    */
   }
 
   touch(sid, cb = noop) {
@@ -150,16 +106,6 @@ class GCPBucketStore extends Store {
     } catch (e) {
       return cb(e);
     }
-
-    /*
-    if (this.disableTouch || this.disableTTL) return cb();
-    let key = this.prefix + sid;
-    this.client.expire(key, this._getTTL(sess), (err, ret) => {
-      if (err) return cb(err);
-      if (ret !== 1) return cb(null, "EXPIRED");
-      cb(null, "OK");
-    });
-    */
   }
 
   destroy(sid, cb = noop) {
@@ -176,10 +122,6 @@ class GCPBucketStore extends Store {
     } catch (e) {
       return cb(e);
     }
-    /*
-    let key = this.prefix + sid;
-    this.client.del(key, cb);
-    */
   }
 }
 
