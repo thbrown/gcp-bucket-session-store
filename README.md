@@ -1,4 +1,4 @@
-# GCB cloud storage bucket base session store for express-session
+# GCB cloud storage bucket session store for express-session
 
 ## Drawbacks
 

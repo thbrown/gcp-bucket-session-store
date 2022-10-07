@@ -86,7 +86,7 @@ class GCPBucketStore extends Store {
     }
   }
 
-  touch(sid, cb = noop) {
+  touch(sid, sess, cb = noop) {
     try {
       // Set timestamp to enable TTL via lifecycle event DaysSinceCustomTime
       if (this.modifyCustomTime) {
@@ -109,6 +109,8 @@ class GCPBucketStore extends Store {
             }
           }
         );
+      } else {
+        cb(null, "OK");
       }
     } catch (e) {
       return cb(e);
