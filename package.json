@@ -1,6 +1,6 @@
 {
   "name": "gcp-bucket-session-store",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Google Cloud Platform Cloud Storage based session store for express-session",
   "main": "./src/index.js",
   "scripts": {
